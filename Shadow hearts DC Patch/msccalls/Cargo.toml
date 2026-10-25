@@ -1,0 +1,7 @@
+[package]
+name = "msccalls"
+version = "0.1.0"
+edition = "2021"
+[dependencies]
+sh2_script = { path = "C:/Users/jamie/Documents/SH2/Sh2 Decomp/sh2-decomp/port/crates/sh2_script" }
+[workspace]
