@@ -67,6 +67,14 @@ The Ring Soul quizzes are already in the US release, so they aren't ported. **VM
 - Chunk 22 = Library > Monsters (stride 0x58: 18 pointers, then {u8, u8 ids<<3|flags, s16 ids[6], u16 number}). The DC has 185 records and the US has 175; the missing ones are monsters 214-223. The kill bit (BTL0 +0xf43) is already set by the US battle code (MON_ +0x14 bit 6 is clear for all ten), and CmdLibrary / CmdLibraryList (FIELD.BIN 0x4996a0 / 0x49c6b0) take the count from the chunk header. `patch_data.add_library_monsters` inserts the ten DC records in the DC's order, with English text, the DC's view block and motion names, then renumbers everything. The chunk grows in place, so this runs before anything is appended to the end of CMDMENU.
 - Not ported yet: chunk 19 (Help) has two DC-only pages for the Iron Claw and Punishment abilities.
 
+## Build inputs (local only; never publish: they hold game data)
+- `build/ovr`, `build/ovr2`: the override trees for discs 1 and 2 (disc paths, as passed to inject2.py; regular edition).
+- `build/tailor_out/FIELD.BIN`: the patched root FIELD.BIN (both discs). `build/undub_out2/d1`, `d2`: undub.py output.
+- `build/title_dc/`: the US `OPENING.DAT` (`OPENING_US.DAT`) plus each plated version (`OPENING_US_v03.DAT`, `OPENING_US_undub_v03.DAT`, ...).
+- `x/`: extracted DC/US scripts (`dcmsc`, `usmsc`), `tailor_patches.json` (patch_tailor.py), survey logs. `tr/`: apply_text.py inputs.
+- Rebuild the patch data from `tools/`:
+  `python make_patch.py 0.3 ..\build\ovr ..\build\ovr2 ..\build\tailor_out\FIELD.BIN ..\build\undub_out2\d1 ..\build\undub_out2\d2 ..\build\title_dc\OPENING_US_undub_v03.DAT ..\release\patchdata.zip`
+
 ## v0.3
 - v0.2 plus the Profile and Library fix above, and the plates `DIRECTORS_CUT_plate_v0.3.png` and `DIRECTORS_CUT_plate_undub_v0.3.png` (applied with `insert_plate.py` to the US `OPENING/OPENING.DAT`). Built with `make_patch.py 0.3 ...`. A patcher build of regular disc 1 matches the in-game-checked test 24 in every file except `OPENING/OPENING.DAT`.
 
