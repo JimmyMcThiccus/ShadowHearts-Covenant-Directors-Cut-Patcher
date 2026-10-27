@@ -78,6 +78,10 @@ class Table:
         return (struct.pack("<HHI", n, 16, n * 16) + bytes(self.raw[8:16]) +
                 b"".join(k + struct.pack("<II", o, s) for k, o, s in self.ent))
 
+def fmt_size(n):
+    """decimal GB (what disc and DVD capacities use) and GiB (what Windows Explorer shows, labelled "GB")"""
+    return "%.2f GB (%.2f GiB)" % (n / 1e9, n / 2**30)
+
 def read_file(iso, table, name):
     """A file by disc path: root files ("FIELD.BIN") or packed ones ("FIELD/MPS/KS_00_U.MSC")."""
     if "/" not in name: return iso.read_at(*iso.files[name])
@@ -247,7 +251,8 @@ def build_disc(d, edition, us_path, dc_path, out_path, man, z, codec):
     v.close(); dc.close(); us.close()
     size = os.path.getsize(out_path); dvd5 = 2295104 * 2048
     print("disc %s done: %s (%s)" % (d, out_path, "all files verified" if not bad else "%d FAILED" % bad))
-    print("size %.2f GB: %s" % (size / 1e9, "fits a single-layer DVD" if size <= dvd5 else "too big for a single-layer DVD by %.1f MB (use a dual-layer disc)" % ((size - dvd5) / 2**20)))
+    print("size %s: %s" % (fmt_size(size), ("fits a single-layer DVD (limit %s, %.0f MB to spare)" % (fmt_size(dvd5), (dvd5 - size) / 1e6)) if size <= dvd5
+          else "too big for a single-layer DVD by %.1f MB (use a dual-layer disc)" % ((size - dvd5) / 1e6)))
     return bad
 
 def write_table(o, T, end):
@@ -322,7 +327,7 @@ def make_single(d1_path, d2_path, out_path, us2_path):
     v.close(); d2.close(); u2.close(); os.remove(d2_path)
     size = os.path.getsize(out_path); dvd9 = 4171712 * 2048
     print("single disc done: %s (%s)" % (out_path, "all files verified" if not bad else "%d FAILED" % bad))
-    print("size %.2f GB: %s" % (size / 1e9, "fits a dual-layer DVD" if size <= dvd9 else "too big for a dual-layer DVD"))
+    print("size %s: %s" % (fmt_size(size), ("fits a dual-layer DVD (limit %s)" % fmt_size(dvd9)) if size <= dvd9 else "too big for a dual-layer DVD"))
     return bad
 
 def decode_key(k):

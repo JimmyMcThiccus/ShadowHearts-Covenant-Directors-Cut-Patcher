@@ -16,6 +16,8 @@ Ported by JamieTheAnything.
 - The banks are copied from your own Director's Cut disc, so the patch data grew by only about 16 KB.
 - Verified in-game: battle voices and Gourmet Connoisseur Ginori's challenge in Florence play in Japanese, with no problems.
 
+- **Patcher:** disc sizes are now printed in both GB and GiB, with the DVD limit and the space left (for example `4.66 GB (4.34 GiB): fits a single-layer DVD (limit 4.70 GB (4.38 GiB), 40 MB to spare)`). Windows Explorer shows GiB labelled as "GB".
+
 The title plates still read V0.3.
 
 ---

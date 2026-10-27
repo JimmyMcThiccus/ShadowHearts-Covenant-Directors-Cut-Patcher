@@ -55,7 +55,8 @@ The game still tracks which disc the story is on, so saves and the Theater's dis
 ## Notes
 
 - Saves from the unpatched US game work. Party members who joined before patching keep the name they were saved with ("Rene" rather than "Lenny").
-- Every two-disc build fits a single-layer DVD (DVD-5, the PS2's single-layer limit). The largest, UnDub disc 2, is 4.66 GB. The patcher prints the size and whether it fits after each disc.
+- Every two-disc build fits a single-layer DVD (DVD-5, the PS2's single-layer limit). The largest, UnDub disc 2, is 4.66 GB, which leaves about 40 MB to spare. The patcher prints the size and whether it fits after each disc.
+- Sizes are in decimal gigabytes (1 GB = 1,000,000,000 bytes), the unit DVD capacities use: a single-layer DVD holds 4.70 GB. Windows Explorer counts in GiB (1,073,741,824 bytes) but labels them "GB", so it shows UnDub disc 2 as about 4.34 GB and a single-layer DVD as 4.38 GB. The patcher prints both.
 - The audio codec's source is in `pcmscodec_src` (Rust). On Linux or macOS, build it with `cargo build --release` and put the `pcmscodec` binary next to the script.
 
 ## Repository layout
