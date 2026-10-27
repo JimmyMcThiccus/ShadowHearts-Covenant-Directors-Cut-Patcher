@@ -6,6 +6,25 @@ Ported by JamieTheAnything.
 
 ---
 
+## v0.3.1 (`release/patchdata.zip`; the same as v0.3 except `COMMON/SSHMES.NA`, `COMMON/SSHDAT.NA`, `FIELD/MPS/CA_02_U.MSC`, `MENU/DAT/CMDMENU.MSD` and `MENU/MSD/PERSONAL.MSD`, on both discs and in both editions)
+
+### Fixed
+
+- **Nelson's boat in Cannes no longer freezes.** In v0.3, taking the boat to Sainte-Marguerite froze before "It's Nelson's boat." appeared, so Nahash could not be reached in normal play. The patched Cannes script had written the new Nahash code over one of the script's own variables (the "message window open" flag). The new code now goes after it, and the rest of the script is byte-identical to the US one. Verified in-game: the boat takes you into Nahash on the first crossing.
+
+### Text and graphics
+
+- **Monster attack names:** all 43 attacks used by the ten Director's Cut monsters showed "Unknown" in battle. 35 now use the official US names they share with other monsters (Slash, Surge, Rock Storm, Dark Claw, Magma, Gathering, Hail Crash, Bright Banish and others). The 7 Gods of Luck's eight attacks have new English names: Path to Yomi, Pure Integrity, Contentment, Great Majesty, Alms Giving, Charming Face, Divine Virtue and One Ailment.
+- **Battle help notes:** the help line under several specials said "Unknown" (or "Unkown"). These now have notes in the US style: Veronica's Punish command, Heal, Hail Break and Stun Perfume; Lenny's Iron Claw; Nicolai's Divine Light.
+- **Skill list titles:** Lenny's and Veronica's special-skill lists had a blank header. They now read "Iron Claw" and "Punish".
+- **Page titles:** the top-left title image on Lenny's and Veronica's special-skill pages read "Soul Energy" and "Game Over" (the US left copies of those images in the two slots). They now read "Iron Claw" and "Punish", assembled from letters of the US title images so they match the other pages (`tools/personal_titles.py`).
+- **Help pages for Iron Claw and Punish:** the two Director's Cut Help pages are added (Help > Special Abilities).
+- **Carla's gift:** the accessory Carla gives in Florence for the Adriatic Magnolia showed "Unknown" (in the original US release too; the Director's Cut only has a developer placeholder). It is now "Magnolia Charm", with a note and an Explanation. The item has no effect in either version, and the text says so.
+
+The title plate still reads V0.3.
+
+---
+
 ## v0.3 (`release/patchdata.zip`; the same as v0.2 except `MENU/DAT/CMDMENU.MSD` and the title plate, on both discs and in both editions)
 
 - **Title screen:** the plates now read "DIRECTOR'S CUT V0.3" and "DIRECTOR'S CUT UNDUB V0.3".

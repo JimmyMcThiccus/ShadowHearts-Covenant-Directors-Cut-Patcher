@@ -23,9 +23,11 @@ assert not bad, bad
 sm_off = dict(us.dref)[0x2f9c]; assert us.cstr(sm_off) == b"SM_00_U"
 # the copied DC bytes: relocate jumps, re-map the two map-name operands
 code = bytearray(us.code)
-while code and code[-1] == 0: code.pop()          # strip the 16-byte padding before appending
-NEW = len(code) + (len(code) & 1)
-code += b"\0" * (NEW - len(code))
+# Append after the WHOLE code segment.  Its zero tail is not padding: the compiler keeps static variables there (op 0x16 =
+# code-segment address; CA_02_U's window flag lives at 0x4940).  Writing the function over it made event 4 (Nelson's boat) hang
+# before its first line: the message helper 0x26e saw a non-zero "window open" flag and never created the window.
+code_vars = {struct.unpack_from("<H", us.code, ip + 1)[0] for ip, (op, _) in us.insns.items() if op == 0x16}
+NEW = len(code); assert all(v + 4 <= NEW for v in code_vars), sorted(map(hex, code_vars))
 body = bytearray(dc.code[DC_LO:DC_HI]); base = NEW + 2 - DC_LO
 for ip in sorted(i for i in dc.insns if DC_LO <= i < DC_HI):
     op = dc.code[ip]; r = ip - DC_LO

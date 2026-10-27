@@ -1,4 +1,4 @@
-# Shadow Hearts: Covenant: Director's Cut content port (v0.3)
+# Shadow Hearts: Covenant: Director's Cut content port (v0.3.1)
 
 This patcher builds a copy of the US *Shadow Hearts: Covenant* with the content that was only in the Japanese *Shadow Hearts II Director's Cut*, translated into English. See `CHANGELOG.md` for the full list.
 
@@ -31,8 +31,8 @@ For the UnDub edition, change `--edition regular` to `--edition undub`. To build
 
 The patcher uses every CPU thread your computer has. Each disc takes from a few seconds to a minute (most of it copying the ISO) and needs about 5 GB of free space. Your original ISOs are never changed. The patched discs are written to the `--out` folder:
 
-- `Shadow Hearts - Covenant (USA) (Disc 1) [DC v0.3].iso`
-- `Shadow Hearts - Covenant (USA) (Disc 1) [DC v0.3 UnDub].iso`
+- `Shadow Hearts - Covenant (USA) (Disc 1) [DC v0.3.1].iso`
+- `Shadow Hearts - Covenant (USA) (Disc 1) [DC v0.3.1 UnDub].iso`
 
 ## Single-disc version (no disc swapping)
 
@@ -42,7 +42,7 @@ Add `--single-disc` to build one image that holds both discs' content. The game 
 python sh2dc_patcher.py --edition regular --single-disc --us1 "US Disc 1.iso" --us2 "US Disc 2.iso" --dc1 "DC Disc 1.iso" --dc2 "DC Disc 2.iso" --out "Patched"
 ```
 
-This writes `Shadow Hearts - Covenant (USA) [DC v0.3 Single Disc].iso` (6.9 GB), or `[DC v0.3 UnDub Single Disc]` with `--edition undub`. It is too big for a single-layer DVD. It runs in PCSX2 or from OPL (on the internal HDD, a network share, or an exFAT USB drive with a recent OPL), or it can be burned to a dual-layer DVD.
+This writes `Shadow Hearts - Covenant (USA) [DC v0.3.1 Single Disc].iso` (6.9 GB), or `[DC v0.3.1 UnDub Single Disc]` with `--edition undub`. It is too big for a single-layer DVD. It runs in PCSX2 or from OPL (on the internal HDD, a network share, or an exFAT USB drive with a recent OPL), or it can be burned to a dual-layer DVD.
 
 How it works: the two US discs run the same program and differ only in their cutscenes, so disc 2's 75 cutscenes are added to disc 1. Four small patches then make every disc change succeed immediately:
 - the game no longer compares the disc number in the disc header;

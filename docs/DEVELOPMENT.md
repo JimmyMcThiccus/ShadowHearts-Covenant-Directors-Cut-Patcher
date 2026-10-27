@@ -67,6 +67,28 @@ The Ring Soul quizzes are already in the US release, so they aren't ported. **VM
 - Chunk 22 = Library > Monsters (stride 0x58: 18 pointers, then {u8, u8 ids<<3|flags, s16 ids[6], u16 number}). The DC has 185 records and the US has 175; the missing ones are monsters 214-223. The kill bit (BTL0 +0xf43) is already set by the US battle code (MON_ +0x14 bit 6 is clear for all ten), and CmdLibrary / CmdLibraryList (FIELD.BIN 0x4996a0 / 0x49c6b0) take the count from the chunk header. `patch_data.add_library_monsters` inserts the ten DC records in the DC's order, with English text, the DC's view block and motion names, then renumbers everything. The chunk grows in place, so this runs before anything is appended to the end of CMDMENU.
 - Not ported yet: chunk 19 (Help) has two DC-only pages for the Iron Claw and Punishment abilities.
 
+## Monster attack names (test 25)
+- The game looks up names with SLUS 0x3b9540(type, id, sub), which selects an SSHDAT section, stride and +2 name index, then an 18-byte SSHMES name. Monster attacks are type 9 sub 0x19: SKIL group 0x19, 0x20-byte records.
+- MONSTERParam +0x16/+0x18 hold either two attack ids, or -1 and a skill set (group 0x18: 0x28-byte records of 20 s16).
+- The DC monsters 214-223 use attacks 481-523, and the US points all of them at name 37 "Unknown". Name 37 has to stay "Unknown" for other cut content.
+- `patch_data.DC_MONSTER_ATTACKS` points 35 of them at their official US names. DC and US name indices are paired through the skill records both versions share. The Seven Gods' 8 attacks get new names 185-192.
+- Debug Battle player sets: 309 = 7 Gods of Luck, 310-319 = Sea of Woods encounters, 320-324 and 326 = Nahash encounters, 325 = Nuckelavee.
+
+## Leftover audit (test 26)
+- Only items the game really gives were translated (the user said to skip placeholders). Gives were found by matching `push code, push n, push 0, callu f n=3` in the scripts (it finds the Ascetic Earrings and the Mr. Meiyuan card). Shop stock is in FIELD.BIN `shopTbl` (US 0x0060ea60, DC file 0x1b0560, 25 lists of {u8 kind, u8 index}).
+- Accessory 34 is given by Carla in FI_00_U in both versions. Its record has 0 effects, so it became "Magnolia Charm" (no effect stated).
+- Skipped, because nothing gives them or they are placeholders: ring items 47-50 Agility Down (no shop or script gives them in either version); accessories 28-33/35/36/40/48 and item 31 (placeholder names, no effects); key items 2, 7 (note), 74, 145 and 172-181; monsters with US name 54 and their attacks 3/32-52 (debug-map monsters only); Help (chunk 19) pages that the US left in Japanese.
+- Beautiful Fool: FIELD.BIN, TAILOR.DAT, WI_13_U/PA_03_U, model 067, the CLOT record, name, note and explanation are identical in test 20 (earned in-game), v0.3 discs 1 and 2, and tests 25/26.
+
+## Nelson's boat (test 27)
+- The boat is not an event box. When CA_02_U loads, it calls `SetLookPoint(0, (-82.3, 21.7, -272.1), 15, event 4, 1, 1)`, but only if flag 4610 is set (by a scene in CA_03_U). EVENTBOX id 4 is a dead leftover: its flags 0x11 lack bit 2, which Cross needs, and `SetFieldData(1/2, ...)` never touches it.
+- **Script rule:** the zero tail of a compiled script's code segment holds static variables (op 0x16 = code-segment address). Never strip it before appending code. `hook_ca02.py` used to, so it wrote the Nahash function over CA_02_U's window flag at 0x4940, and event 4 hung before its first message. `graft.py` keeps the full segment; every other patched script was audited and has its variables intact.
+- Live test: `dcscene.py boat go` (flags 4610, 73 set, 42 clear; world-map point 18 must not be 2), then stand at the rowboat and press the action button.
+
+## v0.3.1
+- v0.3 plus tests 25-32: the monster attack names, the Magnolia Charm, the CA_02_U boat fix, battle help notes, skill-list titles, DC Help pages 128/129 and the Personal page titles. Built with `make_patch.py 0.3.1 ...` (see "Build inputs"). The manifest differs from v0.3 only in the five changed files.
+- Verified: a patcher build of regular disc 1 matches DC test 32 in every file, and the other three discs differ from their v0.3 builds only in those five files.
+
 ## Build inputs (local only; never publish: they hold game data)
 - `build/ovr`, `build/ovr2`: the override trees for discs 1 and 2 (disc paths, as passed to inject2.py; regular edition).
 - `build/tailor_out/FIELD.BIN`: the patched root FIELD.BIN (both discs). `build/undub_out2/d1`, `d2`: undub.py output.

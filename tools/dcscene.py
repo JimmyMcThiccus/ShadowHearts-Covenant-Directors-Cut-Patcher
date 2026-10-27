@@ -14,6 +14,10 @@ PRESETS = {   # map, {flag: 0/1}, {reg8 index: value}
     "meiyuan":   ("WI_13_U", {14: 1, 3404: 1, 39: 1, 3410: 1, 60: 1, 3411: 1, 84: 1, 3412: 0}, {}),
     # Pierre (char 7, always there): talking to him (event 10) runs the Beautiful Fool scene if !298, card 2708, costumes 1793-1801, !1802
     "pierre":    ("PA_03_U", {298: 0}, {}),
+    # Nelson's boat = CA_02_U event 4, reached through a look point at the rowboat (-82.3, 21.7, -272.1), radius 15, that the start
+    # function only registers when flag 4610 is set (box id 4 never accepts Cross: its flags 0x11 lack bit 2).  73 = Nelson's crew
+    # present, 42 clear = Nahash not done; world-map point 18 (WM chunk 0x102c8c +0x10+18) must not be state 2, or the branch skips Nahash
+    "boat":      ("CA_02_U", {4610: 1, 73: 1, 42: 0}, {}),
 }
 d = dbg.DebugServer()
 def wr(a, b):
