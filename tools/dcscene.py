@@ -18,6 +18,8 @@ PRESETS = {   # map, {flag: 0/1}, {reg8 index: value}
     # function only registers when flag 4610 is set (box id 4 never accepts Cross: its flags 0x11 lack bit 2).  73 = Nelson's crew
     # present, 42 clear = Nahash not done; world-map point 18 (WM chunk 0x102c8c +0x10+18) must not be state 2, or the branch skips Nahash
     "boat":      ("CA_02_U", {4610: 1, 73: 1, 42: 0}, {}),
+    # Gourmet Connoisseur Ginori (FI_01_U char 16, event 31): his rounds load FI_EV00B / 01B / 02B, swapped by the UnDub voice banks
+    "ginori":    ("FI_01_U", {}, {}),
 }
 d = dbg.DebugServer()
 def wr(a, b):

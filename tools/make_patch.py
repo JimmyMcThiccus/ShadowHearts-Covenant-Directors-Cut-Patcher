@@ -100,7 +100,7 @@ def main(version, ovr1, ovr2, field_bin, und1, und2, und_opening, out_zip):
         undub_rep = dict(rep); resample = []
         undub_rep["OPENING/OPENING.DAT"] = job(und_opening, ["us:OPENING/OPENING.DAT"])
         for p, f in sorted(u.items()):
-            if not p.endswith(".LSD"): continue
+            if not p.endswith((".LSD", ".SSE")): continue           # cutscenes and (UnDub) the JP battle voice banks
             if "44.1 kHz" in log.get(p, ""):          # rebuilt on the user's machine (resampling): keep only our subtitle times
                 dcb = P.read_file(isos[dc], tabs[dc], p); man["sources"].setdefault(d, {})
                 resample.append([p, {"times": _sbtd_times(open(f, "rb").read()), "dc_md5": md5(dcb), "us_md5": md5(P.read_file(isos[us], tabs[us], p))}])

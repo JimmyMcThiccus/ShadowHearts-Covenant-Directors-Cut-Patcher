@@ -6,6 +6,20 @@ Ported by JamieTheAnything.
 
 ---
 
+## v0.3.2 (`release/patchdata.zip`; the regular edition is unchanged from v0.3.1)
+
+- **UnDub: Japanese voices in battle and in field scenes.** Until now the UnDub edition only had Japanese voices in its cutscenes. It now also uses the Director's Cut sound banks for:
+  - battles: 202 banks with the voices of every party member and monster;
+  - in-engine story scenes on the map: 150 banks.
+
+  Each bank was checked before swapping. Every sound the US game asks for exists in the Japanese bank, and four banks keep their US wave-bank number. Banks that are the same in both versions, and the one US-only bank (190M), stay as they are.
+- The banks are copied from your own Director's Cut disc, so the patch data grew by only about 16 KB.
+- Verified in-game: battle voices and Gourmet Connoisseur Ginori's challenge in Florence play in Japanese, with no problems.
+
+The title plates still read V0.3.
+
+---
+
 ## v0.3.1 (`release/patchdata.zip`; the same as v0.3 except `COMMON/SSHMES.NA`, `COMMON/SSHDAT.NA`, `FIELD/MPS/CA_02_U.MSC`, `MENU/DAT/CMDMENU.MSD` and `MENU/MSD/PERSONAL.MSD`, on both discs and in both editions)
 
 ### Fixed

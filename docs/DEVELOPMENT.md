@@ -89,6 +89,10 @@ The Ring Soul quizzes are already in the US release, so they aren't ported. **VM
 - v0.3 plus tests 25-32: the monster attack names, the Magnolia Charm, the CA_02_U boat fix, battle help notes, skill-list titles, DC Help pages 128/129 and the Personal page titles. Built with `make_patch.py 0.3.1 ...` (see "Build inputs"). The manifest differs from v0.3 only in the five changed files.
 - Verified: a patcher build of regular disc 1 matches DC test 32 in every file, and the other three discs differ from their v0.3 builds only in those five files.
 
+## v0.3.2
+- UnDub only: `tools/undub_voices.py OUT_D1 OUT_D2` writes the DC versions of BTLDATA/SOUND/SE (202) and FIELD/SOUND/SE (150) banks into `build/undub_out2/d1|d2`. A bank is swapped when the FE set id matches and the US SE ids are a subset of the DC's (`tools/sdh.py` reads the SDH blocks). The US WV wave-bank id is kept for 006W00, 006W09, 009W08 and 226M. `make_patch.py` now takes `.SSE` files from the UnDub trees (348 copy ops from the DC disc, 4 small deltas).
+- Verified: the regular discs are identical to v0.3.1, UnDub disc 1 matches the in-game-tested test 34 UnDub, and UnDub disc 2 differs from v0.3.1 only in the 352 banks (4.66 GB, fits a DVD-5).
+
 ## Build inputs (local only; never publish: they hold game data)
 - `build/ovr`, `build/ovr2`: the override trees for discs 1 and 2 (disc paths, as passed to inject2.py; regular edition).
 - `build/tailor_out/FIELD.BIN`: the patched root FIELD.BIN (both discs). `build/undub_out2/d1`, `d2`: undub.py output.
