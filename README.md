@@ -2,7 +2,7 @@
 
 This patcher builds a copy of the US *Shadow Hearts: Covenant* with the content that was only in the Japanese *Shadow Hearts II Director's Cut*, translated into English. See `CHANGELOG.md` for the full list.
 
-Ported by JamieTheAnything.
+Initial porting done by JamieTheAnything with the assistance of Claude, further work by maintainers/forks should be done without the use of AI.
 
 There are two editions:
 
